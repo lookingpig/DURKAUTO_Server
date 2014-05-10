@@ -3,6 +3,7 @@ package org.lookingpig.DurkAuto.server.message.service;
 import org.lookingpig.DurkAuto.server.OnLineUserPool;
 import org.lookingpig.DurkAuto.server.WSService;
 import org.lookingpig.DurkAuto.server.Model.User;
+import org.lookingpig.DurkAuto.server.conf.ServerConfig;
 import org.lookingpig.Tools.Service.MessageService.MessageService;
 import org.lookingpig.Tools.Service.MessageService.Model.Message;
 
@@ -18,6 +19,10 @@ public class OnLineService implements MessageService {
 		WSService service = (WSService) message.getCaller();
 		User user = new User(message.getSender(), service);
 		OnLineUserPool.addUser(user);
+		
+		Message response = new Message();
+		response.setSender(ServerConfig.getConfig("durkauto.service.sender"));
+		response.setSendNumber(ServerConfig.getConfig("durkauto.service.sendnumber"));
 		return null;
 	}
 
