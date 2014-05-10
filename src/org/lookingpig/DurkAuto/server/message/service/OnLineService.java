@@ -21,9 +21,9 @@ public class OnLineService implements MessageService {
 		OnLineUserPool.addUser(user);
 		
 		Message response = new Message();
-		response.setSender(ServerConfig.getConfig("durkauto.service.sender"));
-		response.setSendNumber(ServerConfig.getConfig("durkauto.service.sendnumber"));
-		return null;
+		response.addContent(ServerConfig.MESSAGESERVICE_KEY_NAME, message.getContent(ServerConfig.MESSAGESERVICE_KEY_NAME));
+		response.addContent("state", "success");
+		return response;
 	}
 
 }

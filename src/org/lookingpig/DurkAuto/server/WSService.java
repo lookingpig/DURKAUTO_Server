@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.websocket.CloseReason;
@@ -147,6 +149,14 @@ public class WSService {
 		String strMsg = null;
 
 		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ServerConfig.DATETIME_FORMAT);
+			LocalDateTime now = LocalDateTime.now();
+			
+			message.setSender(ServerConfig.getConfig("durkauto.service.sender"));
+			message.setSendNumber(ServerConfig.getConfig("durkauto.service.sendnumber"));
+			message.setSendTime(formatter.format(now));
+			
+			//序列化
 			strMsg = MessageFactory.getFactory().blend(message);
 			
 			// 加密

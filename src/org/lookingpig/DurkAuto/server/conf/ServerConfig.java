@@ -9,6 +9,11 @@ import org.apache.logging.log4j.Logger;
 public class ServerConfig {
 
 	/**
+	 * 日期时间格式化格式
+	 */
+	public static final String DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+	
+	/**
 	 * 消息服务索引名称
 	 */
 	public static final String MESSAGESERVICE_KEY_NAME = "ServiceName";
