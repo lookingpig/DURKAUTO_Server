@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message-services>
+	<!-- 连线服务 -->
+	<service>
+		<key>OnLineService</key>
+		<class>org.lookingpig.DurkAuto.server.message.service.OnLineService</class>
+	</service>
+</message-services>

@@ -17,6 +17,21 @@ public class ServerConfig {
 	 * 消息服务索引名称
 	 */
 	public static final String MESSAGESERVICE_KEY_NAME = "ServiceName";
+	
+	/**
+	 * 消息服务消息类型
+	 */
+	public static final String MESSAGESERVICE_TYPE = "MessageType";
+	
+	/**
+	 * 消息服务消息类型-请求
+	 */
+	public static final String MESSAGESERVICE_TYPE_REQUEST = "Request";
+	
+	/**
+	 * 消息服务消息类型-响应
+	 */
+	public static final String MESSAGESERVICE_TYPE_RESPONSE = "Response";
 
 	/**
 	 * 密文与摘要分割符

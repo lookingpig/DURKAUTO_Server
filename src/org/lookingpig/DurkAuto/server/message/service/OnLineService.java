@@ -22,6 +22,7 @@ public class OnLineService implements MessageService {
 		
 		Message response = new Message();
 		response.addContent(ServerConfig.MESSAGESERVICE_KEY_NAME, message.getContent(ServerConfig.MESSAGESERVICE_KEY_NAME));
+		response.addContent(ServerConfig.MESSAGESERVICE_TYPE, ServerConfig.MESSAGESERVICE_TYPE_RESPONSE);
 		response.addContent("state", "success");
 		return response;
 	}
