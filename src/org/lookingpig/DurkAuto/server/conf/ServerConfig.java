@@ -43,11 +43,6 @@ public class ServerConfig {
 	 */
 	public static final String CHECK_SERVICE_ENCODE_MODE = "MD5";
 
-	/**
-	 * AES密匙关键字
-	 */
-	public static final String AES_KEY_KEYWORD = "aeskey";
-
 	private static final String SERVER_CONFIG_PATH = "/server_config.properties";
 
 	private static final Logger logger;
@@ -58,7 +53,9 @@ public class ServerConfig {
 		conf = new Properties();
 
 		try {
-			conf.load(Class.class.getResourceAsStream(SERVER_CONFIG_PATH));
+			logger.info("开始加载服务器配置文件。");
+			conf.load(ServerConfig.class.getClassLoader().getResourceAsStream(SERVER_CONFIG_PATH));
+			logger.info("加载服务器配置文件完成。");
 		} catch (IOException e) {
 			logger.error("加载服务器配置文件失败！path: " + Class.class.getResource("/").getPath(), e);
 		}

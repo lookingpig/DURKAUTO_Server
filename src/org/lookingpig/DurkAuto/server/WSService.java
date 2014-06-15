@@ -46,22 +46,34 @@ public class WSService {
 
 	static {
 		logger = LogManager.getLogger(WSService.class);
-		connectionTotal = new AtomicInteger(0);
+		connectionTotal = new AtomicInteger(1);
 		cryptograph = new AESCryptographService();
 	}
 
 	public WSService() {
+		aesKey = ServerConfig.getConfig("durkauto.service.messageservice.initial.key");
 		largeMessage = new StringBuffer();
 	}
 
 	@OnOpen
 	public void onOpen(Session session) {
-		this.session = session;
-		aesKey = AESCryptographService.generateKey();
-		session.getUserProperties().put(ServerConfig.AES_KEY_KEYWORD, aesKey);
-
 		// 累计每日连接量
 		logger.info("一个连接已建立，当前连接数：" + connectionTotal.getAndIncrement());
+		
+		this.session = session;
+		String aesKey = AESCryptographService.generateKey();
+		Message msg = new Message();
+		msg.addContent(ServerConfig.MESSAGESERVICE_KEY_NAME, "ChangeMessageKeyService");
+		msg.addContent("AESKey", aesKey);
+		
+		//告知客户端服务器已就绪
+		try {
+			this.sendMessage(msg);
+		} catch (IOException e) {
+			logger.error("向客户端发送就绪消息失败！原因：", e);
+		}
+		
+		this.aesKey = aesKey;
 	}
 
 	@OnClose
@@ -125,7 +137,7 @@ public class WSService {
 			}
 
 			// 交由消息服务处理
-			Message response = MessageServiceFactory.getFactory().getService(ServerConfig.MESSAGESERVICE_KEY_NAME).service(msg);
+			Message response = MessageServiceFactory.getFactory().getService(msg.getContent(ServerConfig.MESSAGESERVICE_KEY_NAME)).service(msg);
 			
 			//有响应消息时回馈客户端
 			if (null != response) {
@@ -137,6 +149,20 @@ public class WSService {
 			logger.error("MD5摘要服务实例化失败！", e);
 		} catch (Exception e) {
 			logger.error("消息处理失败！message: " + message, e);
+		}
+	}
+	
+	/**
+	 * 向客户端发送一条文本消息
+	 * @param text 文本消息
+	 * @throws IOException 通信异常
+	 */
+	public void sendText(String text) throws IOException {
+		try {
+			session.getBasicRemote().sendText(text);
+		} catch (IOException e) {
+			logger.error("与客户端通信发生异常！", e);
+			throw e;
 		}
 	}
 
