@@ -14,7 +14,7 @@ CREATE TABLE `durkauto_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(32) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
   `email` varchar(128) DEFAULT NULL,
   `phone` varchar(32) DEFAULT NULL,
   `realname` varchar(32) NOT NULL,
@@ -23,4 +23,19 @@ CREATE TABLE `durkauto_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Establish the root user
-insert into `durkauto_user` values(null, 'root', 'root', now(), null, null, '¸ùÓÃ»§');
+insert into `durkauto_user` values(null, 'root', 'root', now(), null, null, 'ï¿½ï¿½ï¿½Ã»ï¿½');
+
+-- Create a appointment service type table
+DROP TABLE IF EXISTS `durkauto_appointment_type`;
+CREATE TABLE `durkauto_appointment_type` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`type_name` varchar(32) NOT NULL,
+	`parking` int(4) NOT NULL,
+	`service_time` int(4) NOT NULL,
+	`reminder_time` int(4) NOT NULL, 
+	`Wait_time` int(4) NOT NULL,
+	`time_basis` varchar(10) NOT NULL,
+	`exclusive` boolean NOT NULL,
+	PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
