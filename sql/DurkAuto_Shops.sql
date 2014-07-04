@@ -23,7 +23,7 @@ CREATE TABLE `durkauto_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Establish the root user
-insert into `durkauto_user` values(null, 'root', 'root', now(), null, null, '���û�');
+insert into `durkauto_user` values(null, 'root', password('root'), now(), 'durkauto@sina.com', '10000000000', '系统管理员');
 
 -- Create a appointment service type table
 DROP TABLE IF EXISTS `durkauto_appointment_type`;
@@ -36,6 +36,6 @@ CREATE TABLE `durkauto_appointment_type` (
 	`Wait_time` int(4) NOT NULL,
 	`time_basis` varchar(10) NOT NULL,
 	`exclusive` boolean NOT NULL,
-	PRIMARY KEY (`id`),
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
